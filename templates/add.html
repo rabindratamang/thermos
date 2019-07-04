@@ -3,7 +3,7 @@
 {% block content %}
     <section>
         <h1>Add new URL</h1>
-        <form action="" method="post">
+        <form action="{{ url_for('add_bookmark') }}" method="post">
             <article>
                 <p>
                     please enter your bookmark: <input type="text" name="url">
