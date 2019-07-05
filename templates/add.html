@@ -1,17 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Thermos | index{% endblock %}
+{% from "form_macros.html" import render_field %}
+{% block title %}Thermos | Add bookmark{% endblock %}
 {% block content %}
     <section>
         <h1>Add new URL</h1>
         <form action="{{ url_for('add_bookmark') }}" method="post">
-            <article>
-                <p>
-                    please enter your bookmark: <input type="text" name="url">
-                </p>
-                <p>
-                    <button type="submit">Submit</button>
-                </p>
-            </article>
+            {{ form.hidden_tag() }}
+            <table>
+                {{ render_field(form.url,size=50) }}
+                {{ render_field(form.description,size=50) }}
+                <tr class="submit">
+                    <td></td>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
         </form>
     </section>
 {% endblock %}

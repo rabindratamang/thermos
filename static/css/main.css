@@ -166,12 +166,12 @@ a:visited{
 }
 
 h1, h2, h3, h4. h5, h6{
-    color: #1E5373;
+    color: #326786;
 }
 
 
 .main aside h3, footer h3{
-    color: #white;
+    color: white;
 }
 
 .flashes li{
@@ -182,9 +182,35 @@ h1, h2, h3, h4. h5, h6{
     background-color: seagreen;
     color: white;
 }
+.error, .error input{
+    color: red;
+}
+
+tr.error td ul{
+    margin-top: 0 ;
+}
+
+tr.submit button{
+    background-color: #0D3E5B;
+    color: white;
+    border: none;
+    padding: 8px;
+}
+
+tr.submit button:hover{
+    background-color: #326786;
+}
 
 
+input, button{
+    margin-left: 10px;
+}
 
+input{
+    padding: 5px;
+    border: none;
+    background-color: #dfe6ef;
+}
 
 
 
