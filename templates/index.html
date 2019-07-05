@@ -7,8 +7,14 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
     </header>
     <section>
-        <h2>{{title}}</h2>
-        <p>{{user.fullname()}}</p>
+        <h2>Recently Added</h2>
+        {% if new_bookmarks %}
+            <ul>
+            {% for bm in new_bookmarks %}
+                <li>{{ bm.user }} added <a href="{{ bm.url }}">{{ bm.url }}</a> </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     </section>
     <section>
         <h2>article section h2</h2>
