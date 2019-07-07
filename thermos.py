@@ -1,34 +1,21 @@
+import os
+
 from flask import Flask, render_template, request, redirect, url_for, flash
-from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 from forms import BookmarkForm
+from models import Bookmark
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = b'\xb9\xa0(6hq\xd0]\x89>C\x8dn\xabo\xff\xf2~&\x1a\x9b\xa2\xef\x84'
-
-
-class User:
-    def __init__(self, first, last):
-        self.first = first
-        self.last = last
-
-    def fullname(self):
-        return f"{self.first} {self.last}"
-
-
-bookmarks = []
-
-
-def store_bookmark(url, description):
-    bookmarks.append(dict(
-        url=url,
-        user='rabindra tamang',
-        date=datetime.utcnow(),
-        description=description
-    ))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'thermos.db')
+db = SQLAlchemy(app)
 
 
 def new_bookmarks(num):
-    return sorted(bookmarks, key=lambda bm: bm['date'], reverse=True)[:num]
+    return []
 
 
 @app.route('/')
@@ -43,7 +30,9 @@ def add_bookmark():
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        store_bookmark(url, description)
+        bm = Bookmark(url=url, description=description)
+        db.session.add(bm)
+        db.session.commit()
         flash(f"stored bookmark: {url}")
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
