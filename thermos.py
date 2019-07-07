@@ -3,7 +3,6 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from forms import BookmarkForm
-from models import Bookmark
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -14,13 +13,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'ther
 db = SQLAlchemy(app)
 
 
-def new_bookmarks(num):
-    return []
+from models import Bookmark
 
 
 @app.route('/')
 def index():
-    return render_template('index.html', new_bookmarks=new_bookmarks(5))
+    return render_template('index.html', new_bookmarks=Bookmark.newest(5))
 
 
 @app.route('/add-bookmark', methods=['GET', 'POST'])
