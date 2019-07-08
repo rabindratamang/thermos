@@ -13,12 +13,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir, 'ther
 db = SQLAlchemy(app)
 
 
-from models import Bookmark
+import models
 
 
 @app.route('/')
 def index():
-    return render_template('index.html', new_bookmarks=Bookmark.newest(5))
+    return render_template('index.html', new_bookmarks=models.Bookmark.newest(5))
 
 
 @app.route('/add-bookmark', methods=['GET', 'POST'])
@@ -28,7 +28,7 @@ def add_bookmark():
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        bm = Bookmark(url=url, description=description)
+        bm = models.Bookmark(url=url, description=description)
         db.session.add(bm)
         db.session.commit()
         flash(f"stored bookmark: {url}")
